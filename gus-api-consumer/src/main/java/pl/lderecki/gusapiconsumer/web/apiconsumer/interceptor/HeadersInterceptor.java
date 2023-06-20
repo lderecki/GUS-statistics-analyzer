@@ -32,7 +32,7 @@ public class HeadersInterceptor implements ClientHttpRequestInterceptor {
                 .query(query)
                 .build();
 
-        URI uriWithQuery = request.getURI().resolve(uriComponents.toUri());
+        URI uriWithQuery = uriComponents.toUri();
 
         HttpRequest requestWithQuery = new HttpRequestWrapper(request) {
             @Override
