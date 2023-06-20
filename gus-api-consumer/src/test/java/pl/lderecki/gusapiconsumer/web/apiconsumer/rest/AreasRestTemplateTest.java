@@ -16,6 +16,7 @@ class AreasRestTemplateTest {
 
     @Test
     void getAreasShouldReturnNotEmptyListOfAreas() {
-        assertTrue(testing.getAreas().contains("\"id\": 1"));
+        String result = testing.getAreas();
+        assertTrue(result.contains("\"id\": 1"));
     }
 }

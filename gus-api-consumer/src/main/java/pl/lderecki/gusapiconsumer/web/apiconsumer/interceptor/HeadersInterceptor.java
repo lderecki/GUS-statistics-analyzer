@@ -5,6 +5,8 @@ import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.support.HttpRequestWrapper;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,9 +20,19 @@ public class HeadersInterceptor implements ClientHttpRequestInterceptor {
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
 
-        String query = "?lang=" + LANG;
-        String pathWithQuery = request.getURI().getPath() + query;
-        URI uriWithQuery = request.getURI().resolve(pathWithQuery);
+        String query = "lang=" + LANG;
+        URI basicUri = request.getURI();
+
+
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .scheme(basicUri.getScheme())
+                .host(basicUri.getHost())
+                .path(basicUri.getPath())
+                .query(basicUri.getQuery())
+                .query(query)
+                .build();
+
+        URI uriWithQuery = request.getURI().resolve(uriComponents.toUri());
 
         HttpRequest requestWithQuery = new HttpRequestWrapper(request) {
             @Override
