@@ -7,15 +7,22 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+import pl.lderecki.gusapiconsumer.configuration.EnvironmentVariablesLoader;
 
 import java.io.IOException;
 import java.net.URI;
 
 public class HeadersInterceptor implements ClientHttpRequestInterceptor {
 
-    private static final String API_KEY = "Hm6CxsoRfJ8Zv90UxFllSanw164P84HgFn0AYIAt0Sg=";
+    //TODO export api key as system variable
+    private final String API_KEY;
     private static final String LANG = "pl";
     private static final String ACCEPT = "application/json";
+
+
+    public HeadersInterceptor() {
+        API_KEY = EnvironmentVariablesLoader.getInstance().getApiKey();
+    }
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
