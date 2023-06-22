@@ -2,6 +2,9 @@ package pl.lderecki.gusapiconsumer.web.apiconsumer.rest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.lderecki.gusapiconsumer.dto.AreaDTO;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +19,8 @@ class AreasRestTemplateTest {
 
     @Test
     void getAreasShouldReturnNotEmptyListOfAreas() {
-        String result = testing.getAreas();
-        assertTrue(result.contains("\"id\": 1"));
+
+        List<AreaDTO> mappedResponse = testing.getAreas();
+        assertFalse(mappedResponse.isEmpty());
     }
 }
